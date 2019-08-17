@@ -1,20 +1,23 @@
-import pygame
+import pygame,random
 
 pygame.init()
 
 x = 40
 y = 40
 snek = []
-health = 2
+health = 4
 
-# To Do list --> Set FPS lower when len ==1
+# To Do list --> Menu, dots, score, gameover
 
-screen = pygame.display.set_mode((800,600))
+screen = pygame.display.set_mode((900,600))
 clock = pygame.time.Clock()
 done = False
 move ="R"
 FPS = 10
 counter = 0
+head = pygame.Rect(x,y,30,30)
+gem = pygame.Rect((random.randint(0, 30)) * 30, random.randint(0, 20) * 30, 30, 30)
+pygame.draw.rect(screen,(255,0,0),gem)
 
 pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
 snek.append(pygame.Rect(x, y, 30, 30))
@@ -37,6 +40,7 @@ while not done:
     if move == "U":
         if (len(snek) < health):
             pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
+            head = pygame.Rect(x, y, 30, 30)
             y = y - 35
             snek.append(pygame.Rect(x, y, 30, 30))
             clock.tick(FPS)
@@ -49,6 +53,7 @@ while not done:
     if move == "D":
         if (len(snek) < health):
             pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
+            head = pygame.Rect(x, y, 30, 30)
             y = y + 35
             snek.append(pygame.Rect(x, y, 30, 30))
             clock.tick(FPS)
@@ -62,6 +67,7 @@ while not done:
 
         if (len(snek) < health):
             pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
+            head = pygame.Rect(x, y, 30, 30)
             x = x + 35
             snek.append(pygame.Rect(x, y, 30, 30))
             clock.tick(FPS)
@@ -76,6 +82,7 @@ while not done:
     if move == "L":
         if (len(snek) < health):
             pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
+            head = pygame.Rect(x, y, 30, 30)
             x = x - 35
             snek.append(pygame.Rect(x, y, 30, 30))
             clock.tick(FPS)
@@ -86,7 +93,8 @@ while not done:
             snek.pop(0)
             pygame.display.flip()
 
-
+    if head.colliderect(gem):
+        pygame.display.set_caption('Success')
 
 
 pygame.quit()
