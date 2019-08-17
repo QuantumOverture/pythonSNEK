@@ -13,11 +13,13 @@ screen = pygame.display.set_mode((900,600))
 clock = pygame.time.Clock()
 done = False
 move ="R"
-FPS = 10
+FPS = 12
 counter = 0
 head = pygame.Rect(x,y,30,30)
 gem = pygame.Rect((random.randint(0, 30)) * 30, random.randint(0, 20) * 30, 30, 30)
 pygame.draw.rect(screen,(255,0,0),gem)
+score = 0
+pygame.display.set_caption('Score: ' + str(score))
 
 pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
 snek.append(pygame.Rect(x, y, 30, 30))
@@ -94,7 +96,12 @@ while not done:
             pygame.display.flip()
 
     if head.colliderect(gem):
-        pygame.display.set_caption('Success')
+        pygame.draw.rect(screen, (0, 0, 0), gem)
+        gem = pygame.Rect((random.randint(1, 29)) * 30, random.randint(1, 19) * 30, 30, 30)
+        pygame.draw.rect(screen, (255, 0, 0), gem)
+        score += 1
+        health += 1
+        pygame.display.set_caption('Score: '+ str(score))
 
 
 pygame.quit()
