@@ -5,7 +5,10 @@ pygame.init()
 x = 40
 y = 40
 snek = []
-health = 3
+health = 2
+
+# To Do list --> Set FPS lower when len ==1
+
 screen = pygame.display.set_mode((800,600))
 clock = pygame.time.Clock()
 done = False
@@ -13,8 +16,8 @@ move ="R"
 FPS = 10
 counter = 0
 
-
-
+pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
+snek.append(pygame.Rect(x, y, 30, 30))
 while not done:
     for event in pygame.event.get():
         # only do something if the event is of type QUIT
@@ -29,24 +32,35 @@ while not done:
             move = "R"
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             move = "L"
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            health+=1
     if move == "U":
-        pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
-        y = y - 35
-        snek.append(pygame.Rect(x, y, 30, 30))
-        clock.tick(FPS)
-        pygame.display.flip()
-
+        if (len(snek) < health):
+            pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
+            y = y - 35
+            snek.append(pygame.Rect(x, y, 30, 30))
+            clock.tick(FPS)
+            pygame.display.flip()
+        else:
+            clock.tick(FPS)
+            pygame.draw.rect(screen, (0, 0, 0), snek[0])
+            snek.pop(0)
+            pygame.display.flip()
     if move == "D":
-
-        pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
-        y = y + 35
-        snek.append(pygame.Rect(x, y, 30, 30))
-        clock.tick(FPS)
-        pygame.display.flip()
-
+        if (len(snek) < health):
+            pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
+            y = y + 35
+            snek.append(pygame.Rect(x, y, 30, 30))
+            clock.tick(FPS)
+            pygame.display.flip()
+        else:
+            clock.tick(FPS)
+            pygame.draw.rect(screen, (0, 0, 0), snek[0])
+            snek.pop(0)
+            pygame.display.flip()
     if move == "R":
 
-        if (len(snek) <= health):
+        if (len(snek) < health):
             pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
             x = x + 35
             snek.append(pygame.Rect(x, y, 30, 30))
@@ -60,12 +74,17 @@ while not done:
             pygame.display.flip()
 
     if move == "L":
-        pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
-        x = x - 35
-        snek.append(pygame.Rect(x, y, 30, 30))
-        clock.tick(FPS)
-        pygame.display.flip()
-
+        if (len(snek) < health):
+            pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 30, 30))
+            x = x - 35
+            snek.append(pygame.Rect(x, y, 30, 30))
+            clock.tick(FPS)
+            pygame.display.flip()
+        else:
+            clock.tick(FPS)
+            pygame.draw.rect(screen, (0, 0, 0), snek[0])
+            snek.pop(0)
+            pygame.display.flip()
 
 
 
